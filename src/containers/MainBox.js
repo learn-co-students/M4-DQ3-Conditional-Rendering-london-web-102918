@@ -3,9 +3,43 @@ import MenuBar from '../components/MenuBar.js'
 import { Profile, Photos, Cocktails, Pokemon} from '../components/Pages.js'
 
 class MainBox extends React.Component {
+constructor (props) {
+  super(props)
+  this.state = {
+  detailsToDisplay: 'profile'
+  }
+}
+
+handleShow = (event) => {
+  event.persist()
+    if (event.target.id === 'photo') {
+    this.setState({detailsToDisplay: 'photo'})
+  } else if
+    (event.target.id === 'cocktail') {
+    this.setState({detailsToDisplay: 'cocktail'})
+  } else if
+    (event.target.id === 'pokemon') {
+    this.setState({detailsToDisplay: 'pokemon'});
+  } else {
+    this.setState({detailsToDisplay: 'profile'})
+  }
+}
 
 
-  render() {
+displayMenuItem = () => {
+  if (this.state.detailsToDisplay === 'photo') {
+    return <Photos />
+  } else if (this.state.detailsToDisplay === 'cocktail') {
+    return <Cocktails />
+  } else if (this.state.detailsToDisplay === 'pokemon') {
+    return <Pokemon />
+  } else  {
+    return <Profile />
+}
+}
+
+
+
 
     /*
 
@@ -13,16 +47,20 @@ class MainBox extends React.Component {
 
     */
 
-    const detailsToDisplay = <div>Hi, I'm a div!</div>
+
+
+render() {
 
     return (
       <div>
-        <MenuBar />
-        {detailsToDisplay}
+        <MenuBar handleShow={this.handleShow} />
+        {this.displayMenuItem()}
       </div>
     )
   }
-
 }
+
+
+
 
 export default MainBox
